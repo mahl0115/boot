@@ -22,12 +22,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-           <!-- <exclusions>
+            <exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-logging</artifactId>
                 </exclusion>
-            </exclusions>-->
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -45,17 +45,17 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!--&lt;!&ndash; log4j2 &ndash;&gt;
+        <!-- log4j2 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
-        &lt;!&ndash; 支持log4j2异步日志 &ndash;&gt;
+        <!-- 支持log4j2异步日志 -->
         <dependency>
             <groupId>com.lmax</groupId>
             <artifactId>disruptor</artifactId>
             <version>3.3.6</version>
-        </dependency>-->
+        </dependency>
 
         <dependency>
             <groupId>org.apache.commons</groupId>

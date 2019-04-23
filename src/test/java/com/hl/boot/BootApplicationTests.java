@@ -1,6 +1,9 @@
 package com.hl.boot;
 
 import com.hl.boot.controller.TestController;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.config.LoggerConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +15,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -36,15 +41,15 @@ public class BootApplicationTests {
     public void test() {
         //log4j2->org.apache.logging.slf4j.Log4jLoggerFactory
         //logback->ch.qos.logback.classic.util.ContextSelectorStaticBinder
-//        LoggerContext loggerContext = (LoggerContext) org.apache.logging.log4j.LogManager.getContext(false);
-//        Map<String, LoggerConfig> map = loggerContext.getConfiguration().getLoggers();
-//        for (LoggerConfig loggerConfig : map.values()) {
-//            String key = loggerConfig.getName();
-//            if (StringUtils.isBlank(key)) {
-//                key = "root";
-//            }
-//            System.out.println(key);
-//        }
+        LoggerContext loggerContext = (LoggerContext) org.apache.logging.log4j.LogManager.getContext(false);
+        Map<String, LoggerConfig> map = loggerContext.getConfiguration().getLoggers();
+        for (LoggerConfig loggerConfig : map.values()) {
+            String key = loggerConfig.getName();
+            if (StringUtils.isBlank(key)) {
+                key = "root";
+            }
+            System.out.println(key);
+        }
     }
 
 }

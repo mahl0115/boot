@@ -1,15 +1,15 @@
 package com.hl.boot.controller;
 
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
 import com.hl.boot.util.LoggerUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.config.LoggerConfig;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -32,7 +32,7 @@ public class TestController {
      * @param loggerName 目标logger名称
      * @param level      目标级别
      */
-    /*@RequestMapping("/updateLoggerLevel4Log4j2")
+    @RequestMapping("/updateLoggerLevel4Log4j2")
     public Object updateLoggerLevel4Log4j2(String loggerName, String level) {
         LoggerContext loggerContext = (LoggerContext) LogManager.getContext(false);
         Map<String, LoggerConfig> map = loggerContext.getConfiguration().getLoggers();
@@ -53,37 +53,13 @@ public class TestController {
 
         return map.entrySet().stream()
                   .collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue().getLevel().name()));
-    }*/
-
-    /**
-     * 修改logger打印级别(logback)
-     *
-     * @param loggerName 目标logger名称
-     * @param level      目标级别
-     */
-    @RequestMapping("/updateLoggerLevel4Logback")
-    public Object updateLoggerLevel4Logback(String loggerName, String level) {
-        ch.qos.logback.classic.LoggerContext loggerContext = (ch.qos.logback.classic.LoggerContext) LoggerFactory.getILoggerFactory();
-        List<Logger> loggerList = loggerContext.getLoggerList();
-
-        loggerList.stream()
-                  .filter(logger -> logger.getName().equals(loggerName))
-                  .filter(logger -> Objects.nonNull(logger.getLevel()))
-                  .forEach(logger -> {
-                      Level targetLevel = Level.toLevel(level);
-                      logger.setLevel(targetLevel);
-                  });
-        return loggerList.stream()
-                         .filter(logger -> Objects.nonNull(logger.getLevel()))
-                         .collect(Collectors.toMap(x -> x.getName(), x -> x.getLevel().levelStr));
     }
 
     @RequestMapping("/getLoggers")
     public Object getLoggers() {
-        ch.qos.logback.classic.LoggerContext loggerContext = (ch.qos.logback.classic.LoggerContext) LoggerFactory.getILoggerFactory();
-        List<Logger> loggerList = loggerContext.getLoggerList();
-        return loggerList.stream()
-                         .filter(logger -> Objects.nonNull(logger.getLevel()))
-                         .collect(Collectors.toMap(x -> x.getName(), x -> x.getLevel().levelStr));
+        LoggerContext loggerContext = (LoggerContext) LogManager.getContext(false);
+        Map<String, LoggerConfig> map = loggerContext.getConfiguration().getLoggers();
+        return map.entrySet().stream()
+                  .collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue().getLevel().name()));
     }
 }
